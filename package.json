@@ -1,0 +1,10 @@
+{
+  "name": "lru-cache-util",
+  "version": "1.0.0",
+  "description": "A tiny LRU cache utility",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm install
+      - name: Run tests
+        run: npm test
+
+  release-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Ensure release label is present
+        run: |
+          echo "Checking that the 'ci-approved' label exists on this repository..."
+          if gh label list --repo "$GITHUB_REPOSITORY" --json name --jq '.[].name' | grep -qx 'ci-approved'; then
+            echo "Release label present."
+          else
+            echo "::error::Required label 'ci-approved' is missing. The release-gate check cannot pass until it exists."
+            exit 1
+          fi
