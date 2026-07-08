@@ -27,7 +27,7 @@ jobs:
       - name: Ensure release label exists
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh label create ci-approved --repo "$GITHUB_REPOSITORY" --color 00ff00 --description "Approved by CI" --update
+        run: gh label create ci-approved --repo "$GITHUB_REPOSITORY" --color 00ff00 --description "Approved by CI" --force
       - name: Ensure release label is present
         run: |
           echo "Checking that the 'ci-approved' label exists on this repository..."

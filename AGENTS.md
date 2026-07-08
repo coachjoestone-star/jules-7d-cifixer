@@ -39,7 +39,7 @@ Known remediation:
         - name: Ensure release label exists
           env:
             GH_TOKEN: ${{ github.token }}
-          run: gh label create ci-approved --repo "$GITHUB_REPOSITORY" --color 00ff00 --description "Approved by CI" --update
+          run: gh label create ci-approved --repo "$GITHUB_REPOSITORY" --color 00ff00 --description "Approved by CI" --force
   ```
 
   This is a standard idempotent bootstrap step; it is safe to run on every CI execution and
