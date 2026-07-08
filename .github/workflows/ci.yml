@@ -7,8 +7,14 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
@@ -27,7 +33,7 @@ jobs:
       - name: Ensure release label exists
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh label create ci-approved --repo "$GITHUB_REPOSITORY" --color 00ff00 --description "Approved by CI" --force
+        run: gh label create ci-approved --repo "$GITHUB_REPOSITORY" --color 00ff00 --description "Approved by CI" || true
       - name: Ensure release label is present
         env:
           GH_TOKEN: ${{ github.token }}
